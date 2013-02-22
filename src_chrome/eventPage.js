@@ -9,6 +9,7 @@
  * http://developer.chrome.com/extensions/browserAction.html#event-onClicked
  */
 chrome.browserAction.onClicked.addListener(function(tab){
+
   chrome.bookmarks.getTree(function(bookmarkTreeNodes){
     updateBookmarkFromTab(tab,bookmarkTreeNodes);
   });
@@ -70,21 +71,13 @@ function updateBookmarkFromTab(tab,bookmarkTreeNode){
   if (maxMatchingChars < 10)
     alert("Could not find any bookmark that shares at least 10 characters!");
   else if (closestBookmarkList.length == 1){
-      var confirmed = confirm("Updated bookmark \n" + 
-            "   " + closestBookmarkList[0].url + "\n" + 
-            "to\n" +
-            "   " + tab.url + "\n");
-      if(confirmed == true){
-        chrome.bookmarks.update(
-            String(closestBookmarkList[0].id),
-            { url : tab.url });
+      chrome.bookmarks.update(
+          String(closestBookmarkList[0].id),
+          { url : tab.url });
       alert("Updated bookmark \n" + 
             "   " + closestBookmarkList[0].url + "\n" + 
             "to\n" +
             "   " + tab.url + "\n");
-      }else{
-        alert("No bookmark has been updated");
-      }
   } else {
       var nodeList = "";
       for ( var h = 0; h < closestBookmarkList.length; h++)
