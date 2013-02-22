@@ -74,10 +74,6 @@ function updateBookmarkFromTab(tab,bookmarkTreeNode){
       chrome.bookmarks.update(
           String(closestBookmarkList[0].id),
           { url : tab.url });
-      alert("Updated bookmark \n" + 
-            "   " + closestBookmarkList[0].url + "\n" + 
-            "to\n" +
-            "   " + tab.url + "\n");
   } else {
       var nodeList = "";
       for ( var h = 0; h < closestBookmarkList.length; h++)
