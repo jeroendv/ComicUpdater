@@ -171,8 +171,11 @@ function matchTillEnd(string1, string2){
  * 2 while allowing character substitution, addition and deletion.
  */
 function fuzzyMatch(str1, str2){
-  var cache = {length:0}; // empty cache
-  return cachedFuzzyMatch(str1, str2, cache);
+  var cache = {length:0,hit:0}; // empty cache
+  var matchCount = cachedFuzzyMatch(str1, str2, cache);
+  //console.log('cache size: %i, cache hits: %i, hit rate: %f', cache.length,cache.hit,cache.hit/cache.length);
+  console.log('%i', matchCount);
+  return matchCount;
 }
 
 /* cached recursive Fuzzy character matching algorithm inspired by the Levenshtein Distance
@@ -199,7 +202,10 @@ function fuzzyMatch(str1, str2){
  */
 function cachedFuzzyMatch(str1, str2,cache){
     var key = [str1,str2].join(',');
-    if(cache[key] != undefined)  return cache[key];
+    if(cache[key] != undefined){
+      cache.hit = cache.hit + 1;
+      return cache[key];
+    }
 
     // trivial solutions
     if(str1.length == 0) return 0;
