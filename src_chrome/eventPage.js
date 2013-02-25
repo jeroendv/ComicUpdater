@@ -38,6 +38,8 @@ function updateBookmarkFromTab(tab,bookmarkTreeNode){
   var folderList = new Array();
   var maxMatchingChars = -1;
   var closestBookmarkList = new Array();
+  var nbBookmarks = 0;
+  console.time('matching against bookmarks');
   for ( var i = 0; i < bookmarkTreeNode.length; i++) {
     folderList.push(bookmarkTreeNode[i]);
   }
@@ -50,6 +52,7 @@ function updateBookmarkFromTab(tab,bookmarkTreeNode){
       var node = rootNode.children[i];
       if (node.url)
       { // node is a bookmark
+        nbBookmarks = nbBookmarks +1;
         var numMatchingChars = fuzzyMatch(node.url, tab.url);
 
         if (numMatchingChars > maxMatchingChars)
@@ -68,6 +71,8 @@ function updateBookmarkFromTab(tab,bookmarkTreeNode){
       }
     }
   }
+  console.timeEnd('matching against bookmarks')
+  console.log('%i bookmarks were matched', nbBookmarks);
   if (maxMatchingChars < 10)
     alert("Could not find any bookmark that shares at least 10 characters!");
   else if (closestBookmarkList.length == 1){
