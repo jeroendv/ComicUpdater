@@ -226,6 +226,8 @@ function BookmarkIterator(bookmarkNodes){
  *
  */
 function DomainBookmarkIterator(domainName, bookmarkNodes){
+  //fixme: this object should inherit from BookmarkIterator
+
   this.domainName = extractDomainName(domainName);
   this.bookmarkIt = new BookmarkIterator(bookmarkNodes);
 
